@@ -1,0 +1,28 @@
+.avatar {
+    width: 5.5rem;
+    height: 5.5rem;
+    border-radius: 50%;
+    border: 2px solid rgba(166, 50, 141, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-out;
+
+    &:hover {
+        border-color: transparent;
+        transition: all 0.2s ease-out;
+    }
+
+    &__img {
+        width: 5rem;
+        height: 5rem;
+        min-width: 0;
+        display: block;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+.username {
+    margin-top: 0.5rem;
+}
