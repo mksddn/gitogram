@@ -14,7 +14,7 @@
       </template>
     </topline>
   </div>
-  <div class="page-content">
+  <div class="x-container page-content">
     <ul class="feeds">
       <li class="feeds__item">
         <feed class="feed">

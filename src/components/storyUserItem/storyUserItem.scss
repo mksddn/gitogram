@@ -8,14 +8,23 @@
     align-items: center;
     transition: all 0.2s ease-out;
 
+    @media screen and (max-width: 768px) {
+        width: 4.5rem;
+        height: 4.5rem;
+    }
+    @media screen and (max-width: 376px) {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
     &:hover {
         border-color: transparent;
         transition: all 0.2s ease-out;
     }
 
     &__img {
-        width: 5rem;
-        height: 5rem;
+        width: 90%;
+        height: 90%;
         min-width: 0;
         display: block;
         border-radius: 50%;
