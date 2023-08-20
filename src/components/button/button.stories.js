@@ -22,8 +22,8 @@ const template = (args) => ({
     `
 })
 
-export const Default = template.bind({})
+export const defaultView = template.bind({})
 
-Default.args = {
+defaultView.args = {
   text: 'Follow me'
 }

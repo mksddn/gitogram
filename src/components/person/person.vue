@@ -1,7 +1,7 @@
 <template>
   <div class="c-person">
     <a href="#" class="profile-link">
-      <img :src="avatarImgSrc" alt="" class="profile-link__avatar">
+      <img :src="avatarImgSrc" alt="user avatar" class="profile-link__avatar">
     </a>
     <div class="person-info">
       <div class="person-info__username">

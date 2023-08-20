@@ -7,7 +7,9 @@
     <div class="content-wrapper">
       <slot />
     </div>
-    <xButton />
+    <div class="button-wrapper">
+      <xButton />
+    </div>
   </div>
 </template>
 

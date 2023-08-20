@@ -1,6 +1,6 @@
 <template>
   <div class="c-feed">
-    <person avatarImgSrc="https://placehold.co/300x300" userName="joshua_l" />
+    <person :avatarImgSrc="avatarImgSrc" :userName="username" />
     <slot />
     <toggler class="toggler" @onToggle='toggle' />
     <div class="comments" v-if="shown">
@@ -26,7 +26,13 @@ export default {
     comment,
     person
   },
-  data () {
+  props: {
+    avatarImgSrc: {
+      type: String,
+      requeried: true
+    }
+  },
+  data() {
     return {
       shown: true,
       comments: [
@@ -46,7 +52,7 @@ export default {
     }
   },
   methods: {
-    toggle (isOpened) {
+    toggle(isOpened) {
       this.shown = isOpened
     }
   }

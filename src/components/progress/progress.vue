@@ -23,7 +23,7 @@ export default {
     this.$nextTick(() => {
       setTimeout(() => {
         this.active = true
-      }, 500);
+      }, 100);
     })
 
     this.$refs.indicator.addEventListener('transitionend', this.emitOnFinish)
