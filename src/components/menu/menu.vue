@@ -16,7 +16,7 @@
 import { icon } from '../../icons'
 
 export default {
-  name: 'menu',
+  name: 'menuComp',
   components: {
     icon
   }
