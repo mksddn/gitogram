@@ -28,7 +28,7 @@ export default {
   },
   data () {
     return {
-      shown: false,
+      shown: true,
       comments: [
         {
           username: 'joshua_l',
