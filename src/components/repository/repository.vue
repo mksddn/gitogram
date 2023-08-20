@@ -2,7 +2,7 @@
   <div class="c-repository">
     <h2 class="repository-title">{{ title }}</h2>
     <div class="repository-description">{{ description }}</div>
-    <statistic class="statistic" :starsNumber="'156k'" :forksNumber="'4'" />
+    <statistic class="statistic" :starsNumber="starsNumber" :forksNumber="forksNumber" />
   </div>
 </template>
 
@@ -22,6 +22,14 @@ export default {
     description: {
       type: String,
       require: true
+    },
+    starsNumber: {
+      type: Number,
+      required: true
+    },
+    forksNumber: {
+      type: Number,
+      required: true
     }
   }
 }

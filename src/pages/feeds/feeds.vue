@@ -16,9 +16,9 @@
   </div>
   <div class="x-container page-content">
     <ul class="feeds">
-      <li class="feeds__item">
-        <feed class="feed">
-          <repository title="Vue.js" description="JavaScript framework for building interactive web applications ⚡" />
+      <li class="feeds__item" v-for="item in items" :key="item.id">
+        <feed class="feed" :username="item.owner.login" :avatarImgSrc="item.owner.avatar_url">
+          <repository :title="item.name" :description="item.description" :starsNumber="item.stargazers_count" :forksNumber="item.forks_count" />
         </feed>
       </li>
     </ul>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import * as api from '@/api'
 import { topline } from '@/components/topline'
 import { storyUserItem } from '@/components/storyUserItem'
 import stories from '@/pages/feeds/data.json'
@@ -44,14 +45,23 @@ export default {
     pageHeader,
     repository
   },
-  data () {
+  data() {
     return {
-      stories
+      stories,
+      items: []
     }
   },
   methods: {
-    handlePress (value) {
+    handlePress(value) {
       console.log(`User's ID: ${value}`)
+    }
+  },
+  async created() {
+    try {
+      const { data } = await api.trendings.getTrendings()
+      this.items = data.items
+    } catch (error) {
+      console.log(error)
     }
   }
 }
