@@ -3,7 +3,7 @@ import button from './button.vue'
 export default {
   title: 'button',
   component: { button },
-  arfTypes: {
+  argTypes: {
     text: {
       control: {
         type: 'text'
