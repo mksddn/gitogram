@@ -33,11 +33,11 @@ export default {
   },
   props: {
     starsNumber: {
-      type: String,
+      type: Number,
       require: true
     },
     forksNumber: {
-      type: String,
+      type: Number,
       require: true
     }
   }

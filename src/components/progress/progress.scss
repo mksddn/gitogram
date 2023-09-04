@@ -21,5 +21,8 @@
   bottom: 0;
   background-color: #31AE54;
   width: 0;
-  transition: 5s;
+}
+
+.active .indicator {
+  transition: 5s linear;
 }

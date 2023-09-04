@@ -1,6 +1,6 @@
 <template>
   <div class="c-feed">
-    <person :avatarImgSrc="avatarImgSrc" :userName="username" />
+    <person :avatarImgSrc="avatarImgSrc" :userName="userName" />
     <slot />
     <toggler class="toggler" @onToggle='toggle' />
     <div class="comments" v-if="shown">
@@ -27,6 +27,10 @@ export default {
     person
   },
   props: {
+    userName: {
+      type: String,
+      requeried: true
+    },
     avatarImgSrc: {
       type: String,
       requeried: true

@@ -8,6 +8,12 @@
 
 export default {
   name: 'progressBar',
+  props: {
+		activated: {
+			type: Boolean,
+			required: true
+		}
+	},
   data() {
     return {
       active: false
@@ -17,16 +23,20 @@ export default {
   methods: {
     emitOnFinish() {
       this.$emit('onFinish')
+      this.active = false
     }
   },
   mounted() {
     this.$nextTick(() => {
       setTimeout(() => {
-        this.active = true
+        this.active = this.activated;
       }, 100);
     })
 
     this.$refs.indicator.addEventListener('transitionend', this.emitOnFinish)
+  },
+  updated () {
+    this.active = !!this.activated
   },
   beforeUnmount() {
     this.$refs.indicator.removeEventListener('transitionend', this.emitOnFinish)
