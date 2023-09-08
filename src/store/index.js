@@ -1,10 +1,14 @@
 import { createStore } from "vuex";
-// import { user } from "./modules/user";
+import userData from "./modules/user";
 import trendings from "./modules/trendings";
+import auth from "./modules/auth";
+import starred from './modules/starred'
 
 export default createStore({
   modules: {
-    // user,
-    trendings
+    userData,
+    trendings,
+    auth,
+    starred
   }
 })

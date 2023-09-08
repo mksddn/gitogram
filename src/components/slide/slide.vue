@@ -19,7 +19,13 @@
         </div>
       </div>
       <div class="button">
-        <xButton />
+        <xButton @click="$emit(data.following.status ? 'onUnFollow' : 'onFollow', data.id)"
+          :theme="data.following.status ? 'grey' : 'green'">
+          <div v-if="data.following.loading">
+            <span>Загружаю...</span>
+          </div>
+          <span v-else>{{ data.following.status ? 'Unfollow' : 'Follow' }}</span>
+        </xButton>
       </div>
     </div>
     <div class="arrows-wrapper">
@@ -38,7 +44,7 @@
 </template>
 
 <script>
-import { button } from '../button'
+import { xButton } from '../button'
 import { person } from '../person'
 import { progressBar } from '../progress'
 import { icon } from '../../icons'
@@ -48,14 +54,14 @@ import { spinner } from '../spinner'
 export default {
   name: 'storyPostItem',
   components: {
-    xButton: button,
+    xButton,
     person,
     progressBar,
     icon,
     placeholder,
     spinner
   },
-  emits: ['onPrevSlide', 'onNextSlide', 'onProgressFinish'],
+  emits: ['onPrevSlide', 'onNextSlide', 'onProgressFinish', 'onFollow', 'onUnFollow'],
   props: {
     active: Boolean,
     loading: Boolean,
@@ -68,8 +74,7 @@ export default {
     },
     data: {
       type: Object,
-      required: true,
-      default: () => ({})
+      required: true
     }
   }
 }

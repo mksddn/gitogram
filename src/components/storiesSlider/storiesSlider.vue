@@ -3,8 +3,14 @@
     <div class="stories-container">
       <ul class="stories" ref="slider">
         <li class="stories-item" v-for="(trending, ndx) in trendings" :key="trending.id" ref="item">
-          <slide :data="getStoryData(trending)" :active="slideNdx === ndx" :loading="slideNdx === ndx && loading"
-            :btnsShown="activeBtns" @onNextSlide="handleSlider(ndx + 1)" @onPrevSlide="handleSlider(ndx - 1)"
+          <slide :data="getStoryData(trending)"
+            :active="slideNdx === ndx"
+            :loading="slideNdx === ndx && loading"
+            :btnsShown="activeBtns"
+            @onFollow="starRepo"
+            @onUnFollow="unStarRepo"
+            @onNextSlide="handleSlider(ndx + 1)"
+            @onPrevSlide="handleSlider(ndx - 1)"
             @onProgressFinish="handleSlider(ndx + 1)" />
         </li>
       </ul>
@@ -38,7 +44,7 @@ export default {
   },
   computed: {
     ...mapState({
-      trendings: (state) => state.trendings.data
+      trendings: (state) => state.trendings.trendings
     }),
     activeBtns() {
       // if (this.btnsShown === false) return []
@@ -50,14 +56,17 @@ export default {
   methods: {
     ...mapActions({
       fetchTrendings: 'trendings/fetchTrendings',
-      fetchReadme: 'trendings/fetchReadme'
+      fetchReadme: 'trendings/fetchReadme',
+      starRepo: 'trendings/starRepo',
+      unStarRepo: 'trendings/unStarRepo'
     }),
     getStoryData(obj) {
       return {
         id: obj.id,
         userAvatar: obj.owner?.avatar_url,
         userName: obj.owner?.login,
-        content: obj.readme
+        content: obj.readme,
+        following: obj.following
       }
     },
     async fetchReadmeForActiveSlide() {

@@ -1,40 +1,24 @@
-export const user = {
+import * as api from '../../api'
+
+export default {
   namespaced: true,
   state: {
-    user: {
-      data: null,
-      loading: false,
-      error: ""
-    }
+    userData: []
   },
   getters: {
-    getIfUserIsFemale(state) {
-      return state.user.data?.gender === 'female'
-    }
   },
   mutations: {
-    SET_USER_DATA(state, payload) {
-      state.user.data = payload;
-    },
-    SET_USER_LOADING(state, payload) {
-      state.user.loading = payload;
-    },
-    SET_USER_ERROR(state, payload) {
-      state.user.error = payload;
+    SET_USERDATA(state, payload) {
+      state.userData = payload
     }
   },
   actions: {
-    async fetchUser({ commit }) {
-      commit('SET_USER_LOADING', true);
+    async getUserData({ commit }) {
       try {
-        const response = await fetch("https://randomuser.me/api");
-        const data = await response.json();
-
-        commit('SET_USER_DATA', data.results[0]);
-      } catch (error) {
-        commit('SET_USER_ERROR', 'Не удалось получить пользователя');
-      } finally {
-        commit('SET_USER_LOADING', false);
+        const { data } = await api.user.getUserData()
+        commit('SET_USERDATA', data)
+      } catch (e) {
+        console.log(e)
       }
     }
   }

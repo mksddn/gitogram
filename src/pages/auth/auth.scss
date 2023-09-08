@@ -1,0 +1,34 @@
+.auth {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+
+  &-right {
+    padding-left: 141px;
+
+    .logo {
+      margin-bottom: 25px;
+    }
+
+    .desc {
+      margin-bottom: 54px;
+    }
+  }
+
+}
+
+.wrap {
+  max-width: 256px;
+}
+
+.desc {
+  font-size: 18px;
+  line-height: 28px;
+  color: #6F6F6F;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+}

@@ -1,78 +1,51 @@
-// import * as api from '@/api'
-
-// export const trendings = {
-//   namespaced: true,
-//   state: {
-//     trendings: {
-//       data: {},
-//       loading: false,
-//       error: ""
-//     }
-//   },
-//   getters: {
-//   },
-//   mutations: {
-//     SET_TRENDINGS_DATA(state, payload) {
-//       state.trendings.data = payload;
-//     },
-//     SET_TRENDINGS_LOADING(state, payload) {
-//       state.trendings.loading = payload;
-//     },
-//     SET_TRENDINGS_ERROR(state, payload) {
-//       state.trendings.error = payload;
-//     }
-//   },
-//   actions: {
-//     async fetchTrendings({ commit }) {
-//       commit('SET_TRENDINGS_LOADING', true);
-//       try {
-//         const { data } = await api.trendings.getTrendings()
-//         commit('SET_TRENDINGS_DATA', data.items);
-//       } catch (error) {
-//         commit('SET_TRENDINGS_ERROR', 'Не удалось получить список репозиториев');
-//       } finally {
-//         commit('SET_TRENDINGS_LOADING', false);
-//       }
-//     }
-//   }
-// }
-
-
 import * as api from '../../api'
 
 export default {
   namespaced: true,
   state: {
-    data: []
+    trendings: []
+  },
+  getters: {
+    getRepoById: (state) => (id) => state.trendings.find((item) => item.id === id)
   },
   mutations: {
-    SET_TRENDINGS (state, trendings) {
-      state.data = trendings
+    SET_TRENDINGS (state, payload) {
+      state.trendings = payload.map(item => {
+        item.following = {
+          status: false,
+          isLoading: false,
+          error: ''
+        }
+        return item
+      })
     },
-
     SET_README: (state, payload) => {
-      state.data = state.data.map(repo => {
+      state.trendings = state.trendings.map(repo => {
         if (payload.id === repo.id) {
-          repo.readme = payload.readme
+          repo.readme = payload.content
+        }
+        return repo
+      })
+    },
+    SET_FOLLOWING: (state, payload) => {
+      state.trendings = state.trendings.map((repo) => {
+        if (payload.id === repo.id) {
+          repo.following = {
+            ...repo.following,
+            ...payload.trendings
+          }
         }
         return repo
       })
     }
-
-  },
-  getters: {
-    getRepoById: (state) => (id) => {
-      return state.data.find((item) => item.id === id)
-    }
   },
   actions: {
-    async fetchTrendings ({ state, commit, rootState }) {
+    async fetchTrendings ({ commit, rootState }) {
       try {
         const { data } = await api.trendings.getTrendings()
         commit('SET_TRENDINGS', data.items)
-      } catch (error) {
-        console.log(error)
-        throw error
+      } catch (e) {
+        console.log(e)
       }
     },
     async fetchReadme ({ commit, getters }, { id, owner, repo }) {
@@ -80,10 +53,84 @@ export default {
       if (curRepo.readme !== undefined) return
       try {
         const { data } = await api.readme.getReadme({ owner, repo })
-        commit('SET_README', { id, readme: data })
+        commit('SET_README', { id, content: data })
+      } catch (e) {
+        console.log(e)
+        throw e
+      }
+    },
+    async starRepo ({ commit, getters }, id) {
+      const { name: repo, owner } = getters.getRepoById(id)
+      commit('SET_FOLLOWING', {
+        id,
+        trendings: {
+          status: false,
+          isLoading: true,
+          error: ''
+        }
+      })
+      try {
+        await api.starred.starRepo({ owner: owner.login, repo })
+        commit('SET_FOLLOWING', {
+          id,
+          trendings: {
+            status: true,
+            isLoading: true
+          }
+        })
       } catch (error) {
-        console.log('Ошибка ' + error)
-        throw error
+        console.log(error)
+        commit('SET_FOLLOWING', {
+          id,
+          trendings: {
+            status: false,
+            error: 'error'
+          }
+        })
+      } finally {
+        commit('SET_FOLLOWING', {
+          id,
+          trendings: {
+            isLoading: false
+          }
+        })
+      }
+    },
+    async unStarRepo ({ commit, getters }, id) {
+      const { name: repo, owner } = getters.getRepoById(id)
+      commit('SET_FOLLOWING', {
+        id,
+        trendings: {
+          status: false,
+          isLoading: true,
+          error: ''
+        }
+      })
+      try {
+        await api.starred.unStarRepo({ owner: owner.login, repo })
+        commit('SET_FOLLOWING', {
+          id,
+          trendings: {
+            status: false,
+            isLoading: true
+          }
+        })
+      } catch (error) {
+        console.log(error)
+        commit('SET_FOLLOWING', {
+          id,
+          trendings: {
+            status: false,
+            error: 'error'
+          }
+        })
+      } finally {
+        commit('SET_FOLLOWING', {
+          id,
+          trendings: {
+            isLoading: false
+          }
+        })
       }
     }
   }

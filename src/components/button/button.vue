@@ -1,6 +1,6 @@
 <template>
   <button :class="[
-    'c-button', 'theme-green'
+    'c-button', `${theme}`
   ]">
     <span class="btn-text">
       {{ text }}
@@ -11,11 +11,15 @@
 
 <script>
 export default {
-  name: 'button',
+  name: 'xButton',
   props: {
     text: {
       type: String,
-      default: 'Follow'
+      default: ''
+    },
+    theme: {
+      type: String,
+      default: 'green'
     }
   }
 }

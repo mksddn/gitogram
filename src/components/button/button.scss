@@ -6,3 +6,37 @@
   font-weight: bold;
   border-radius: 0.3rem;
 }
+
+.green {
+  background: #31AE54;
+  &:hover {
+      background: #31AE54;
+      .btn__inner {
+          font-size: 16px;
+      }
+  }
+  &::before {
+      content: none;
+  }
+  
+}
+
+.grey {
+  background: #9E9E9E;
+  &:hover {
+      background: #9E9E9E;
+      .btn__inner {
+          font-size: 16px;
+      }
+  }
+  &::before {
+      content: none;
+  }
+}
+
+.btn-text {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+}

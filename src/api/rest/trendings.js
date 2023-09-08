@@ -1,9 +1,5 @@
 import { makeRequest } from '../requests'
 
-// export const getTrendings = (lang = 'javascript') => {
-//   console.log(lang)
-// }
-
 const addStartingZero = (value) => value < 10 ? `0${value}` : value
 
 export const getTrendings = (lang = 'javascript') => {

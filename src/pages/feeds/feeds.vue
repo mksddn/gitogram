@@ -7,7 +7,7 @@
       </template>
       <template #content>
         <ul class="stories">
-          <li class="stories-item" v-for="(story, ndx) in trendings.data" :key="story.id">
+          <li class="stories-item" v-for="story in trendings" :key="story.id">
             <story-user-item :avatar="story.owner.avatar_url" :username="story.owner.login"
               @onPress="handlePress(story.id)" />
           </li>
@@ -17,8 +17,13 @@
   </div>
   <div class="x-container page-content">
     <ul class="feeds">
-      <li class="feeds__item" v-for="item in trendings.data" :key="item.id">
-        <feed class="feed" :userName="item.owner.login" :avatarImgSrc="item.owner.avatar_url">
+      <li class="feeds__item" v-for="item in starred" :key="item.id">
+        <feed class="feed" :userName="item.owner.login" :avatarImgSrc="item.owner.avatar_url" :date="item.created_at"
+          @loadIssues.once="getIssues({
+            id: item.id,
+            owner: item.owner.login,
+            repo: item.name
+          })" :issues="item.issues ? item.issues : []" :isLoading="isLoading">
           <repository :title="item.name" :description="item.description" :starsNumber="item.stargazers_count"
             :forksNumber="item.forks_count" />
         </feed>
@@ -62,17 +67,27 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchTrendings: 'fetchTrendings'
+      fetchTrendings: 'trendings/fetchTrendings',
+      getStarredRepos: 'starred/getStarredRepos',
+      getIssues: 'starred/getIssues'
     }),
     trigger() {
       this.fetchTrendings()
     },
     handlePress(value) {
-      this.$router.push({name: 'stories', params: {initialSlide: value}})
+      this.$router.push({ name: 'stories', params: { initialSlide: value } })
     }
   },
-  mounted() {
-    this.$store.dispatch('trendings/fetchTrendings')
+  computed: {
+    ...mapState({
+      trendings: state => state.trendings.trendings,
+      starred: state => state.starred.starred,
+      isLoading: state => state.starred.isLoading
+    })
+  },
+  async mounted() {
+    await this.fetchTrendings()
+    await this.getStarredRepos()
   }
 }
 </script>
