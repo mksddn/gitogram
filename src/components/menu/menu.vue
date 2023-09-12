@@ -3,9 +3,9 @@
         <a class="home-icon" href="#">
             <icon name="home" />
         </a>
-        <a class="profile-icon" href="#">
+        <router-link class="profile-icon" :to="{ name:'profile' }">
             <img :src="userAvatar.avatar_url" alt="Profile" class="profile-icon__image">
-        </a>
+        </router-link>
         <a @click.prevent="logout" class="signOut-icon" href="#">
             <icon name="signOut" />
         </a>

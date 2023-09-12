@@ -14,6 +14,9 @@
       <div class="person-info__realName" v-if="realName">
         {{ realName }}
       </div>
+      <div class="person-type">
+      <slot name="type" />
+    </div>
     </div>
   </div>
 </template>
