@@ -31,7 +31,7 @@ export default {
     },
     userName: {
       type: String,
-      required: true
+      default: ''
     },
     realName: {
       type: String

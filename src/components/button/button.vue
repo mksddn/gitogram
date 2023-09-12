@@ -1,6 +1,6 @@
 <template>
   <button :class="[
-    'c-button', `${theme}`
+    'c-button', `${color}`
   ]" @mouseover="onHover" @mouseleave="unHover">
     <span class="btn-text">
       {{ btnText }}
@@ -28,17 +28,17 @@ export default {
   data() {
     return {
       btnText: this.text,
-      theme: this.theme
+      color: this.theme
     }
   },
   methods: {
     onHover() {
       this.btnText = this.hoverText
-      this.theme = 'grey'
+      this.color = 'grey'
     },
     unHover() {
       this.btnText = this.text
-      this.theme = 'green'
+      this.color = 'green'
     }
   }
 }
