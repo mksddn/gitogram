@@ -44,13 +44,14 @@ export default {
     },
     issues: {
       type: Array,
-      required: true
+      default: []
     },
     isLoading: {
       type: Boolean,
       required: true
     }
   },
+  emits: ['loadIssues'],
   data() {
     return {
       shown: false
@@ -59,12 +60,14 @@ export default {
   methods: {
     toggle(isOpened) {
       this.shown = isOpened
-      isOpened ? this.$emit('loadIssues') : null
+      // isOpened ? this.$emit('loadIssues') : null
+      if (isOpened && this.issues.length < 1) {
+        this.$emit('loadIssues')
+      }
     }
   },
   computed: {
-    formatedDate()
-    {
+    formatedDate() {
       return new Date(this.date)
     }
   }
