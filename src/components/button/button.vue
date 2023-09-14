@@ -22,7 +22,8 @@ export default {
       default: 'green'
     },
     hoverText: {
-      type: String
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -33,7 +34,11 @@ export default {
   },
   methods: {
     onHover() {
-      this.btnText = this.hoverText
+      if (!this.hoverText == '') {
+        this.btnText = this.hoverText
+      } else {
+        this.btnText = this.text
+      }
       this.color = 'grey'
     },
     unHover() {
